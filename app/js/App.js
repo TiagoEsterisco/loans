@@ -31,6 +31,9 @@ app.controller('LoginController', function($scope,$http) {
 	        })
 	        .
 	        error(function(data, status) {
+	        	if(status==404) {
+	        		alert("Boom in the back exploded");
+	        	}
 	            $scope.data = data || "Request failed";
 	            $scope.status = status;         
 	    });
