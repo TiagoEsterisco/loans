@@ -32,17 +32,45 @@ class Init {
 	
 	function do_login ($username,$password)
 	{
-		$sql='SELECT * from t_user where username="'.$username.'" and password= "'.$password.'";';
+		$sql='SELECT id_user from t_user where username="'.$username.'" and password= "'.$password.'";';
 		$rs = $this->sql_action($sql);
 		$rows_returned = $rs->num_rows;
 
 		if($rows_returned==0){
 			return false;
 		} else {
-			return true;
+			$rs->data_seek(0);
+			$row = $rs->fetch_assoc();
+			return $row['id_user'];
 		}
 	}
 	
+
+	function get_loans ($user_id,$type_id)
+	{
+		$sql = 'SELECT l.id_friend, u.username, l.date_in, l.date_out
+				from t_loan l
+				inner join t_user u
+				on l.id_friend=u.id_user
+				where l.id_user = '.$user_id.' and l.type_id = '.$type_id;
+
+		$rs = $this->sql_action($sql);
+		$rows_returned = $rs->num_rows;
+
+		if($rows_returned==0){
+			return false;
+		} else {
+			$myArray = array();
+			$tempArray = array();
+		}
+		$rs->data_seek(0);
+		while($row = $rs->fetch_assoc()){
+		 	$tempArray = $row;
+            array_push($myArray, $tempArray);
+		}
+
+		return json_encode($myArray);
+	}
 	
 	/* 	--- To be deleted  --- */
 	function query ()
