@@ -48,7 +48,8 @@ class Init {
 
 	function get_loans ($user_id,$type_id)
 	{
-		$sql = 'SELECT l.id_friend, u.username, l.date_in, l.date_out
+		$sql = 'SELECT l.id_friend, u.username, l.date_in, l.date_out, object, DATE(NOW()) as now,
+				( SELECT DATEDIFF(DATE(NOW()),l.date_in) ) as days
 				from t_loan l
 				inner join t_user u
 				on l.id_friend=u.id_user

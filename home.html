@@ -11,13 +11,14 @@
 
 
 <div style="float:left; width:100%; height:100%;">
-	something
-	
 
+
+
+<div ng-show="!loan.length">You have {{ loans.length }} items with someone. </div>
+<div ng-show="loan.length"> No one have your stuff. </div>
 <ul>
     <li ng-repeat="loan in loans">
-      {{loan.username}}
-      <p>{{loan.date_out}}</p>
+      This guy: {{ loan.username }} took your : {{ loan.object }} , {{ loan.days }} days ago</p>
     </li>
 </ul>
 
