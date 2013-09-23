@@ -9,7 +9,7 @@ var app = angular.module("app",['ngCookies']).config(function($routeProvider) {
 		controller  : 'HomeController'
 	});
 
-	//$routeProvider.otherwise({ redirectTo: '/login'});
+	$routeProvider.otherwise({ redirectTo: '/login'});
 });
 
 app.factory('myUser', function ($cookieStore) {
@@ -30,6 +30,11 @@ app.factory('myUser', function ($cookieStore) {
 });
 
 app.controller('LoginController', function($scope,$http,$location,myUser) {
+
+	if(myUser.getUser()!="") {
+		$location.path('/home');
+	}
+
 	$scope.credentials = { username:"", passoword:"" };
 	
 	$scope.url = GLOBAL_URL+'/handlers/login.php';
@@ -72,8 +77,7 @@ app.controller('HomeController', function($scope,myUser,$http) {
 	$http.post($scope.url,
 		{ data : query_elements }).
         success(function(data, status) {
-        	$scope.loans = data;
-            
+        	$scope.loans  = data;
             $scope.status = status;
             $scope.data   = data;
             $scope.result = data; // Show result from server in our <pre></pre> element
@@ -86,6 +90,7 @@ app.controller('HomeController', function($scope,myUser,$http) {
             $scope.data   = data || "Request failed";
             $scope.status = status;         
     });
+
 }); // end HomeController
 
 
