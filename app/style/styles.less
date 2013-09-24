@@ -25,9 +25,6 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 	font-family: 'Raleway', sans-serif;
-	font-weight: 100;
-	text-shadow: 0 1px rgba(0,0,0, 1);
-	color: #fff;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -36,6 +33,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	
 }
 ol, ul {
 	list-style: none;
@@ -52,4 +50,61 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+#site_content {
+	float:left;
+	width: 100%;
+	height: 100%;
+	background:#347385;
+	font-weight: 100;
+	text-shadow: 0 1px rgba(0,0,0, 1);
+	color: #fff;
+}
+
+#Login_form {
+	width:300px;
+	height:150px;
+	margin: 30px auto;
+}
+
+#Login_form > form >li {
+	list-style : none;
+	margin-top : 1px;
+	width      : 185px;
+	height     : 30px;
+	text-align: center;
+}
+
+#Login_form > form >li >label {
+	float:left;
+	width: 60px;
+	height:30px;
+	line-height: 30px;
+	text-align : left;
+}
+
+#Login_form > form >li > input   {
+	outline     : none;
+	text-align  : center;
+   	border      : 0px solid white; 
+   	background  : #fff;
+   	height      : 30px;  
+   	float       : right;
+}
+
+@loginBorder:5px;
+
+#Login_form > form >li > button   {
+
+	margin: 5px auto !important;
+	height                :20px;
+	width                 :100px;
+	border                :0px;
+	background            : #FFF;
+	-webkit-border-radius : @loginBorder;
+	-moz-border-radius    : @loginBorder;
+	border-radius         : @loginBorder;
+	padding: 0px;
+}
+
 

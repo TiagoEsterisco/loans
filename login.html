@@ -1,9 +1,9 @@
 <div ng-controller="LoginController" id="Login_form">
 		<form>
-		Name:   <input type="text"     ng-model="credentials.username" require/><br />
-		Pass:   <input type="password" ng-model="credentials.password" require/><br />
-		
-		<button ng-click="login(user)">Login</button>
+			
+			<li> <label>Name:</label>    <input placeholder="Username" type="text"     ng-model="credentials.username" require/></li>
+			<li> <label>Pass:</label>    <input placeholder="Password" type="password" ng-model="credentials.password" require/></li>
+			<li> <button id="button" ng-click="login(user)">Login</button> </li>
 		</form>
 </div>
 <br>

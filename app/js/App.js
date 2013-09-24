@@ -1,4 +1,7 @@
-var app = angular.module("app",['ngCookies']).config(function($routeProvider) {
+var app = angular.module("app",['ngCookies']);
+
+app.config(function($routeProvider,$locationProvider) {
+	
 	$routeProvider.when('/login', {
 		templateUrl : 'login.html',
 		controller  : 'LoginController'
@@ -10,30 +13,48 @@ var app = angular.module("app",['ngCookies']).config(function($routeProvider) {
 	});
 
 	$routeProvider.otherwise({ redirectTo: '/login'});
+
+	// In production need to change to false.
+	$locationProvider.html5Mode(false);
 });
 
-app.factory('myUser', function ($cookieStore) {
-        return {
-        	setUser : function(name) { 
-        		$cookieStore.put('username', name); 
-        	},
-        	getUser : function() {
-        		return $cookieStore.get('username');
-        	},
-        	setId   : function(id) {
-        		$cookieStore.put('user_id', id);
-        	},
-        	getId   : function() {
-        		return $cookieStore.get('user_id');
-        	}
+app.run(function(logincheck, $location, myUser){
+        //console.log("Into run mode");
+        console.log("Is logged in: ", logincheck( myUser.getUser() ));
+        if(!logincheck(myUser.getUser()))
+        {
+        	$location.path('/login');
         }
 });
 
-app.controller('LoginController', function($scope,$http,$location,myUser) {
 
-	if(myUser.getUser()!="") {
-		$location.path('/home');
-	}
+app.factory('logincheck', function(){
+  return function(userid){
+	  //Perform logical user loging check either by looking at cookies or make a call to server
+	  if(userid != undefined ) return true;
+	  return false;  
+	  };
+});
+
+app.factory('myUser', function ($cookieStore) {
+    return {
+    	setUser : function(name) { 
+    		$cookieStore.put('username', name); 
+    	},
+    	getUser : function() {
+    		return $cookieStore.get('username');
+    	},
+    	setId   : function(id) {
+    		$cookieStore.put('user_id', id);
+    	},
+    	getId   : function() {
+    		return $cookieStore.get('user_id');
+    	}
+    }
+});
+
+
+app.controller('LoginController', function($scope,$http,$location,myUser) {
 
 	$scope.credentials = { username:"", passoword:"" };
 	
