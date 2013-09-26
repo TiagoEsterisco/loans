@@ -1,35 +1,78 @@
-<div style="width:100%; height:100%; background:#347385; top:0; left:0; color:white; font-family:sans-serif;">
+<div ng-controller="HomeController">
+
+    <!-- Header  -->
+    <div id="home_header">
+    	<div id="user_picture"></div>
+    	<div id="user_name">
+            Hi {{ username }} your Id is {{ id }}
+        </div>
+    </div> <!-- header -->
 
 
-<!-- Header -->
-<div style="float:let; width:100%; height:100px; background: #AB4A37; float:left;">
-	<div style="float:right; width:80px; height:80px; background:#DBC6A9; border:5px solid white; margin-right:20px; margin-top:5;"></div>
-	<div style="float:right; width:200px; margin-top:30px; text-align:right; padding-right:10px;"> Hi {{ username }} your Id is {{ id }} </div>
+
+    <!-- Body -->
+    <div id="home_content">
+
+    	<div class="home_loan_box" ng-show="!loan.length"> You have {{ loans.length }} items with someone. </div>
+    	<div class="home_loan_box" ng-show="loan.length" > No one have your stuff. </div>
+
+
+        <div style="display:none">
+            <label> Add new loan </label>
+            <input placeholder="Friends Name"          type="text" ng-model="friend.username" require/>
+            <input placeholder="What are you loaning"  type="text" ng-model="friend.loan" require/>
+        </div>
+
+        <div class="home_loan_box">
+            <h2> Loans List </h2>
+
+            <input style="float:left;" type="text" ng-model="search.username" class="search-query" style="width: 180px" placeholder="Search by Username">
+
+            <ul>
+                <!-- Col name -->
+                <span class="home_list_colum_holder">
+                    <li class="home_list_colum_name" id="home_list_header">
+                        <a href="" ng-click="order = 'username'; reverse=false"> Friend Name     </a>
+                    </li>
+                    <li class="home_list_colum_name" id="home_list_header">
+                        <a href="" ng-click="order = 'object'; reverse=!reverse">   Stuff you loan  </a>
+                    </li>
+                    <li class="home_list_colum_name" id="home_list_header">
+                        <a href="" ng-click="order = 'days'; reverse=!reverse">     Days since that </a>
+                    </li>
+                </span>
+
+                <!-- Listing  -->
+        	    <li ng-animate="'animate'" class="home_list_row" ng-repeat="loan in loans | orderBy:order:reverse | filter:search" >
+                    <span class="home_list_colum_name">
+                        {{ loan.friend_name }}
+                    </span>
+                    <span class="home_list_colum_name">
+                        {{ loan.object }}
+                    </span>
+                    <span class="home_list_colum_name" ng-class="{'biggest': biggest(loan.days)}">
+                        {{ loan.days }}
+                    </span>
+        	    </li>
+        	</ul>
+        </div>  <!-- home_loan_box -->
+
+
+        <div class="home_loan_box">
+            <h2> Add loan </h2>
+            <span class="form_box">
+                <label>Friend Username:</label> <input placeholder="Friend Username" type="text" ng-model="loan.friend_name" require/>
+                <label>Object:</label>          <input placeholder="Object"          type="text" ng-model="loan.object" require/>
+                <label>When:</label>            <input placeholder="Object"          type="date" ng-model="loan.data"/>
+                <button id="button" ng-click="set_loan(loan)">Add</button>
+            </span>
+        </div>
+
+    </div> <!-- home_content -->
 </div>
-
-<!-- Body -->
-
-
-<div style="float:left; width:100%; height:100%;">
-
-
-
-<div ng-show="!loan.length">You have {{ loans.length }} items with someone. </div>
-<div ng-show="loan.length"> No one have your stuff. </div>
-<ul>
-    <li ng-repeat="loan in loans">
-      This guy: {{ loan.username }} took your : {{ loan.object }} , {{ loan.days }} days ago</p>
-    </li>
-</ul>
-
-
-
-
-</div>
-
 <!-- Footer -->
 
-</div>
+
 
 
 <!-- http://www.colourlovers.com/palette/44764/Rebel_Yell -->

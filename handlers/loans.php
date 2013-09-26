@@ -1,9 +1,9 @@
-<?php 
+<?php
 include('../config/init.php');
 
  $init->dbinit();
-// from front-end 
-$data    = file_get_contents("php://input"); 
+// from front-end
+$data    = file_get_contents("php://input");
 $objData = json_decode($data);
 
 // setting easy vars for query.
