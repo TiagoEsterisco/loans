@@ -1,13 +1,13 @@
 <div ng-controller="LoginController" id="Login_form">
 		<form>
-			
-			<li> <label>Name:</label>    <input placeholder="Username" type="text"     ng-model="credentials.username" require/></li>
-			<li> <label>Pass:</label>    <input placeholder="Password" type="password" ng-model="credentials.password" require/></li>
-			<li> <button id="button" ng-click="login(user)">Login</button> </li>
+
+			<li> <input placeholder="Username" type="text"     ng-model="credentials.username" require/></li>
+			<li> <input placeholder="Password" type="password" ng-model="credentials.password" require/></li>
+			<li> <button ng-click="login(user)">Login</button> </li>
 		</form>
 </div>
 <br>
--- Or --- 
+-- Or ---
 <br>
 Sign up with facebook.
 <a href="#" onClick=(login())> Login Facebook </a>

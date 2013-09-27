@@ -26,7 +26,7 @@
         <div class="home_loan_box">
             <h2> Loans List </h2>
 
-            <input style="float:left;" type="text" ng-model="search.username" class="search-query" style="width: 180px" placeholder="Search by Username">
+            <input style="float:left;" type="text" ng-model="search.friend_name" class="search-query" style="width: 180px" placeholder="Search by Username">
 
             <ul>
                 <!-- Col name -->
@@ -43,7 +43,7 @@
                 </span>
 
                 <!-- Listing  -->
-        	    <li ng-animate="'animate'" class="home_list_row" ng-repeat="loan in loans | orderBy:order:reverse | filter:search" >
+        	    <li class="home_list_row" ng-animate="'animate'" ng-repeat="loan in loans | orderBy:order:reverse | filter:search" ng-mouseenter="show = true" ng-mouseleave="show = false" >
                     <span class="home_list_colum_name">
                         {{ loan.friend_name }}
                     </span>
@@ -53,19 +53,34 @@
                     <span class="home_list_colum_name" ng-class="{'biggest': biggest(loan.days)}">
                         {{ loan.days }}
                     </span>
+                    <div class="returned_loan" ng-show="show" >
+                        <label>Returned</label> <input type="checkbox" name="returned_loan" value="returned" ng-click="returned_loan(loan)">
+                    </div>
         	    </li>
         	</ul>
         </div>  <!-- home_loan_box -->
 
 
-        <div class="home_loan_box">
-            <h2> Add loan </h2>
-            <span class="form_box">
-                <label>Friend Username:</label> <input placeholder="Friend Username" type="text" ng-model="loan.friend_name" require/>
-                <label>Object:</label>          <input placeholder="Object"          type="text" ng-model="loan.object" require/>
-                <label>When:</label>            <input placeholder="Object"          type="date" ng-model="loan.data"/>
-                <button id="button" ng-click="set_loan(loan)">Add</button>
-            </span>
+
+        <div class="cube_container" >
+            <div class="cube" ng-class="{true: 'cube_rotate', false: ''}[isActive]">
+                <div class="frontFace" ng-click="rotate_cube()">
+                         <h2> Add loan </h2>
+                     </span>
+                 </div>
+                <div class="backFace">
+                    <span ng-click="rotate_cube()" class="normal_face"> cancel </span>
+                    <span class="form_box" id="add_loan_form">
+                        <input placeholder="Friend Username" type="text" ng-model="loan.friend_name" require/>
+                        <input placeholder="Object"          type="text" ng-model="loan.object" require/>
+                        <input placeholder="Object"          type="date" ng-model="loan.data"/>
+                        <button id="button" ng-click="set_loan(loan)" ng-click="rotate_cube()">Add</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+
         </div>
 
     </div> <!-- home_content -->

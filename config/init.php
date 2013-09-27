@@ -1,7 +1,6 @@
-<?php 
+<?php
 
 include('config.php');
-
 $DBServer = 'localhost';
 $DBName   = 'loans';
 $DBUser   = 'root';

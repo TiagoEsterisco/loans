@@ -18,6 +18,8 @@ app.config(function($routeProvider,$locationProvider) {
 	$locationProvider.html5Mode(false);
 });
 
+
+// Check if user is logged in, if not Block Access
 app.run(function(logincheck, $location, myUser){
         //console.log("Into run mode");
         console.log("Is logged in: ", logincheck( myUser.getUser() ));
@@ -28,6 +30,9 @@ app.run(function(logincheck, $location, myUser){
 });
 
 
+// FACTORIES
+
+// Login logic
 app.factory('logincheck', function(){
   return function(userid){
 	  //Perform logical user loging check either by looking at cookies or make a call to server
@@ -36,6 +41,7 @@ app.factory('logincheck', function(){
 	  };
 });
 
+// User object
 app.factory('myUser', function ($cookieStore) {
     return {
     	setUser : function(name) {
@@ -53,7 +59,11 @@ app.factory('myUser', function ($cookieStore) {
     }
 });
 
+// END FACTORIES
 
+
+
+// LOGIN.HTML
 app.controller('LoginController', function($scope,$http,$location,myUser) {
 
 	$scope.credentials = { username:"", passoword:"" };
@@ -87,7 +97,7 @@ app.controller('LoginController', function($scope,$http,$location,myUser) {
 }); // end LoginController
 
 
-
+// HOME.HTML
 app.controller('HomeController', function($scope,myUser,$http) {
 	$scope.username = myUser.getUser();
 	$scope.id = myUser.getId();
@@ -126,21 +136,13 @@ app.controller('HomeController', function($scope,myUser,$http) {
     }
 
     // Add Loan
-
-
-
     $scope.loan = { user_id: $scope.id, friend_name:"", object:"", date:""};
-
     $scope.url = GLOBAL_URL+'/handlers/set_loan.php';
 
     $scope.set_loan = function() {
-
-        window.ted = $scope.loan;
-
         $http.post($scope.url,
             { data : $scope.loan }).
             success(function(data, status) {
-                    alert(data);
                 $scope.loans.push ($scope.loan);
                 $scope.status = status;
                 $scope.data   = data;
@@ -155,10 +157,20 @@ app.controller('HomeController', function($scope,myUser,$http) {
     }
 
 
+    $scope.returned_loan = function(loan) {
+        var index = $scope.loans.indexOf(loan)
+        $scope.loans.splice(index,1);
+    }
+
+        $scope.isActive = false;
+
+    $scope.rotate_cube = function() {
+        $scope.isActive = !$scope.isActive;
+    }
+
+
+
 }); // end HomeController
-
-
-
 
 
 
